@@ -20,3 +20,14 @@ build/
 # IDE / editor fájlok (ha használsz pl. VSCode)
 .vscode/
 .idea/
+
+# Optional: coverage reportok
+coverage/
+
+# Optional: debug vagy temp fájlok
+*.tmp
+*.swp
+
+# Env fájlok több környezethez (ha vannak)
+.env.local
+.env.*.local
