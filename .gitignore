@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Env fájlok
+.env
+
+# Log fájlok
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS fájlok
+.DS_Store
+Thumbs.db
+
+# Build / dist mappák (ha vannak)
+dist/
+build/
+
+# IDE / editor fájlok (ha használsz pl. VSCode)
+.vscode/
+.idea/
