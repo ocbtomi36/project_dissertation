@@ -1,6 +1,8 @@
 # Node modules
 node_modules/
 
+# database connections
+database/
 # Env fájlok
 .env
 
