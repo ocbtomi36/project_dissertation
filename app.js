@@ -4,6 +4,8 @@ require("dotenv").config({path: '.env'});
 
 const app = express();
 
+const authRoutes = require('./routes/authRoutes');
+
 app.use(bodyParser.json());
 
 app.use((req,res,next) => {
@@ -12,6 +14,8 @@ app.use((req,res,next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next()
 })
+
+app.use('/auth',authRoutes);
 
 app.use((error, req,res,next) => {
     const status = error.statusCode || 500;
