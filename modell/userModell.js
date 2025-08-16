@@ -21,11 +21,8 @@ module.exports = class User {
         }
          
     }   
-    /** 
-     * Addition queries for validation of pin_number and email
-    */
     /**
-     * Validate pinNumber, if exists
+     * Check pin number
      */
     static async PinNumberExistsByIncommingData(pinNumber) {
         try {
@@ -40,7 +37,7 @@ module.exports = class User {
         }
     }
     /**
-     * Validate e-mail, if exists
+     * Check e-mail
      */
     static async EmailExistsByIncommingData(eMail) {
         try {
@@ -49,6 +46,21 @@ module.exports = class User {
             [eMail]
         );
             return row.length > 0;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
+    /**
+     *  Gets user password by incomming email
+     */
+    static async GetUserPasswordByIncommingEmail(eMail) {
+        try {
+            const [row] = await db.query(
+            'SELECT password FROM users WHERE email = ? ',
+            [eMail]
+        );
+            return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);
             throw error;

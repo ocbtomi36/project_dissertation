@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-const validateUserInput = (req, res, next) => {
+const incommingDataResult = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({
@@ -21,6 +21,6 @@ const validateIncommingUserRole = (req, res, next) => {
     next()
 }
 module.exports = {
-    validateUserInput,
+    incommingDataResult,
     validateIncommingUserRole
 };

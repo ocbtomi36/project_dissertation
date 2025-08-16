@@ -1,4 +1,5 @@
 const User = require('../modell/userModell')
+const bcrypt = require('bcryptjs');
 
 class UserMiddleware {
 
@@ -26,6 +27,29 @@ class UserMiddleware {
             return res.status(409).json({ message: 'Wrong pin number format'})
         }
         next();
+    }
+    static async loginUser(req,res,next){
+        const { email } = req.body;
+        const { password } = req.body;    
+        try{
+            const getPassword = await User.GetUserPasswordByIncommingEmail(email);
+            if(getPassword === null){
+                return res.status(401).json({ message: 'There is no user with that email' })
+            }
+            const loadedPassword = getPassword.password
+            console.log(loadedPassword);
+            console.log(password)
+            const isPasswordMatch = await bcrypt.compare(password,loadedPassword);
+            console.log(isPasswordMatch);
+            /*
+            if(!isPasswordMatch){
+                return res.status(401).json({ message: 'Wrong password' })
+            }
+                */
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: 'An login error occured'})
+        }
     }
 }
 
