@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../../database/db');
 
 module.exports = class User {
     constructor( given_name, family_name,pin_number, user_role, email, password) {

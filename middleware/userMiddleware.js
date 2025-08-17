@@ -1,4 +1,4 @@
-const User = require('../modell/userModell')
+const User = require('../modell/user/userModell')
 const bcrypt = require('bcryptjs');
 
 class UserMiddleware {

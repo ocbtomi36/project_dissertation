@@ -1,4 +1,4 @@
-const User = require('../modell/userModell');
+const User = require('../modell/user/userModell');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -19,9 +19,6 @@ exports.signup = async(req,res,next) => {
 exports.login = async(req,res,next) => {
     try{
     const loadedUser = req.user;
-    console.log(loadedUser.email + ' ' + loadedUser.iduser)
-    const cucc = process.env.JWT_SECRET;
-    console.log(cucc);
     const token = jwt.sign({
         email: loadedUser.email,
         iduser: loadedUser.iduser,
