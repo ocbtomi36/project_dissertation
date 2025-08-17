@@ -54,10 +54,10 @@ module.exports = class User {
     /**
      *  Gets user password by incomming email
      */
-    static async GetUserPasswordByIncommingEmail(eMail) {
+    static async GetUserByIncommingEmail(eMail) {
         try {
             const [row] = await db.query(
-            'SELECT password FROM users WHERE email = ? ',
+            'SELECT * FROM users WHERE email = ? ',
             [eMail]
         );
             return row.length > 0 ? row[0] : null;
