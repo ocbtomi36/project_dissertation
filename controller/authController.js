@@ -24,7 +24,8 @@ exports.login = async(req,res,next) => {
     console.log(cucc);
     const token = jwt.sign({
         email: loadedUser.email,
-        iduser: loadedUser.iduser
+        iduser: loadedUser.iduser,
+        role: loadedUser.role
     }, process.env.JWT_SECRET, { expiresIn: '1h'});
     res.status(200).json({token: token, userId: loadedUser.iduser.toString()})
     } catch(error){
