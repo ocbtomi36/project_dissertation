@@ -1,19 +1,20 @@
 const db = require('../../database/db');
 
 module.exports = class User {
-    constructor( given_name, family_name,pin_number, user_role, email, password) {
+    constructor( given_name, family_name,pin_number, user_role, email, password,addresses_idaddress) {
         
         this.given_name = given_name, 
         this.family_name = family_name, 
         this.pin_number = pin_number, 
         this.user_role = user_role, 
         this.email = email,
-        this.password = password
+        this.password = password,
+        this.addresses_idaddress = addresses_idaddress
     }  
     async save(){
         try {
-            const [result] = await db.execute('INSERT INTO users (given_name, family_name, pin_number, user_role, email, password) VALUES (?, ?, ?, ?, ?, ?)',
-            [this.given_name,this.family_name,this.pin_number,this.user_role,this.email,this.password]);
+            const [result] = await db.execute('INSERT INTO users (given_name, family_name, pin_number, user_role, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [this.given_name,this.family_name,this.pin_number,this.user_role,this.email,this.password,this.addresses_idaddress]);
             return result.iduser;
         } catch (error) {
             console.error('There is an error in database:', error);
