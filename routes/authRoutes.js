@@ -10,17 +10,9 @@ const userValidator  = require('../validators/userValidator');
 const adressValidator = require('../validators/addressValidator');
 const router = express.Router();
 
-router.post('/signup', [
-    userValidator,
-    adressValidator,
-    incommingDataResult, 
-    validateIncommingUserRole,
-    userMiddleware.validatePinNumber,
-    userMiddleware.checkPinNumber,
-    userMiddleware.checkEmail]
-    ,authController.signup);
+router.post('/signup', authController.signup);
 
-
+/*
 router.post('/login', [
     body('email').trim().isEmail().normalizeEmail().withMessage("this field must be an valid e-mail format"),
     body('password').trim().isLength({min:1,max:100}).withMessage('length of password is incorrect')
@@ -28,4 +20,5 @@ router.post('/login', [
     incommingDataResult,userMiddleware.loginUser,authController.login
 
 );
+*/
 module.exports = router;

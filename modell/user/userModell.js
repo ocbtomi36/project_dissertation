@@ -13,9 +13,9 @@ module.exports = class User {
     }  
     async save(){
         try {
-            const [result] = await db.execute('INSERT INTO users (given_name, family_name, pin_number, user_role, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            const [result] = await db.execute('INSERT INTO users (given_name, family_name, pin_number, user_role, email, password, addresses_idaddress) VALUES (?, ?, ?, ?, ?, ?, ?)',
             [this.given_name,this.family_name,this.pin_number,this.user_role,this.email,this.password,this.addresses_idaddress]);
-            return result.iduser;
+            return result.insertId;
         } catch (error) {
             console.error('There is an error in database:', error);
             throw error;
