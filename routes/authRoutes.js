@@ -2,15 +2,15 @@ const express = require('express');
 
 const { body } = require('express-validator');
 
-const { incommingDataResult, validateIncommingUserRole } = require('../helper/helper')
+const { incommingDataResult } = require('../helper/helper')
 
 const authController = require('../controller/authController');
-const userMiddleware = require('../middleware/userMiddleware');
+const userDataValidateMiddleware = require('../middleware/user/userDataValidateMiddleware');
 const userValidator  = require('../validators/userValidator');
 const addressValidator = require('../validators/addressValidator');
 const router = express.Router();
 
-router.post('/signup',[ userValidator,addressValidator ],incommingDataResult, authController.signup);
+router.post('/signup',[ userValidator,addressValidator ],userDataValidateMiddleware.checkPinNumber,userDataValidateMiddleware.checkEmail,incommingDataResult,userDataValidateMiddleware.checkUserRole, authController.signup);
 
 /*
 router.post('/login', [
