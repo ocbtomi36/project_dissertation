@@ -7,10 +7,10 @@ const { incommingDataResult, validateIncommingUserRole } = require('../helper/he
 const authController = require('../controller/authController');
 const userMiddleware = require('../middleware/userMiddleware');
 const userValidator  = require('../validators/userValidator');
-const adressValidator = require('../validators/addressValidator');
+const addressValidator = require('../validators/addressValidator');
 const router = express.Router();
 
-router.post('/signup', authController.signup);
+router.post('/signup',[ userValidator,addressValidator ],incommingDataResult, authController.signup);
 
 /*
 router.post('/login', [
