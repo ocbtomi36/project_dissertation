@@ -21,7 +21,7 @@ class UserDataValidateMiddleware {
         next();
     }
     static async checkUserRole(req,res,next) {
-        const { user_role } = req.body.user_role;
+        const { user_role } = req.body;
         const userRoles = ['admin','manager','employee'];
         if(!userRoles.includes(user_role)){
         return res.status(422).json({
