@@ -22,6 +22,37 @@ module.exports = class User {
         }
          
     }   
+
+    static async getAllUserData(){
+        try {
+            const [row] = await db.query('SELECT users.iduser, users.given_name, users.family_name, users.pin_number, addresses.postal_code, locality_names.locality_name, addresses.street_name,street_types.street_type,addresses.house_number FROM users INNER JOIN addresses ON users.addresses_idaddress = addresses.idaddress INNER JOIN locality_names ON addresses.locality_names_idlocality_name = locality_names.idlocality_name INNER JOIN street_types ON addresses.street_types_idstreet_type = street_types.idstreet_type');
+            return row.length > 0 ? row : null;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
+
+    static async getOneUserDataById(iduser){
+        try {
+            const [row] = await db.query('SELECT users.iduser, users.given_name, users.family_name, users.pin_number, addresses.postal_code, locality_names.locality_name, addresses.street_name,street_types.street_type,addresses.house_number FROM users INNER JOIN addresses ON users.addresses_idaddress = addresses.idaddress INNER JOIN locality_names ON addresses.locality_names_idlocality_name = locality_names.idlocality_name INNER JOIN street_types ON addresses.street_types_idstreet_type = street_types.idstreet_type where users.iduser = ?', [iduser]);
+            
+            return row.length > 0 ? row[0] : null;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
+    static async modifyUserData(iduser) {
+        try {
+            const [ result ] = await db.execute('UPDATE finaldbrentcar.users SET given_name = ?, family_name = ?, pin_number = ?, email = ? WHERE (`iduser` = ?)',[this.given_name,this.family_name,this.pin_number,this.user_role,this.email,this.password,this.addresses_idaddress,iduser]);
+            return result.insertId;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
+
     /**
      * Check pin number
      */
