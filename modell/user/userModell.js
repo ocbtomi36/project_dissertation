@@ -43,9 +43,9 @@ module.exports = class User {
             throw error;
         }
     }
-    static async modifyUserData(iduser) {
+    async updateUserData(iduser) {
         try {
-            const [ result ] = await db.execute('UPDATE finaldbrentcar.users SET given_name = ?, family_name = ?, pin_number = ?, email = ? WHERE (`iduser` = ?)',[this.given_name,this.family_name,this.pin_number,this.user_role,this.email,this.password,this.addresses_idaddress,iduser]);
+            const [ result ] = await db.execute('UPDATE users SET given_name = ?, family_name = ?,pin_number = ?,email = ?,user_role = ?,password = ?, addresses_idaddress = ?  WHERE (iduser = ?)',[this.given_name,this.family_name,this.pin_number,this.email,this.user_role,this.password,this.addresses_idaddress,iduser]);
             return result.insertId;
         } catch (error) {
             console.error('There is an error in database:', error);
@@ -53,16 +53,17 @@ module.exports = class User {
         }
     }
 
+
     /**
      * Check pin number
      */
-    static async PinNumberExistsByIncommingData(pinNumber) {
+    static async GetsIdUserByIncommingPinNumber(pinNumber) {
         try {
             const [row] = await db.query(
             'SELECT iduser FROM users WHERE pin_number = ? LIMIT 1',
             [pinNumber]
         );
-            return row.length > 0;
+            return row.length > 0 ? row[0].iduser : null;
         } catch (error) {
             console.error('There is an error in database:', error);
             throw error;
@@ -71,13 +72,13 @@ module.exports = class User {
     /**
      * Check e-mail
      */
-    static async EmailExistsByIncommingData(eMail) {
+    static async GetsIdUserByIncommingEmail(eMail) {
         try {
             const [row] = await db.query(
-            'SELECT email FROM users WHERE email = ? LIMIT 1',
+            'SELECT iduser FROM users WHERE email = ? LIMIT 1',
             [eMail]
         );
-            return row.length > 0;
+            return row.length > 0 ? row[0].iduser : null;
         } catch (error) {
             console.error('There is an error in database:', error);
             throw error;

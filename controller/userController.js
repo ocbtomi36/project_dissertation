@@ -36,10 +36,19 @@ exports.modifyUser = async (req,res,next) => {
         const { iduser } = req.params;
 
         const fkAddress = await AddressService.insertAddress(locality_name, postal_code, street_name, street_type, house_number);
-        console.log(fkAddress);
-        // prepare data to insert kész
-        // check pin number and email if exist ? if yes yes than whom is it same as params ok 
-        console.log('itt vagyok');
+        const dbPinNumberUserId = await User.GetsIdUserByIncommingPinNumber(pin_number);
+        const dbEmailUserId = await User.GetsIdUserByIncommingEmail(email);
+        const isEmailOk = dbEmailUserId === null || dbEmailUserId == iduser;
+        const isPinOk   = dbPinNumberUserId === null || dbPinNumberUserId == iduser;
+
+        if (isEmailOk && isPinOk) {
+            const updatingUser = new User(given_name, family_name, pin_number, user_role, email, password,fkAddress);
+            await updatingUser.updateUserData(iduser);
+            return res.status(201).json({ message: 'User update success' });
+        }
+
+        return res.status(401).json({ message: 'email or pin number must be unique' });
+
     } catch (error) {
         res.status(500).json({message: error.message})
     }
