@@ -14,6 +14,7 @@ const { body } = require('express-validator');
     
 
 module.exports = userJsonValidate;
+/** Check if it is not duplicated */
 
 const userJsonUpdateValidae = [
 
