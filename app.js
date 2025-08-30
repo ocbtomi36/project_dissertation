@@ -20,7 +20,7 @@ app.use((req,res,next) => {
 
 app.use('/auth',authRoutes);
 app.use('/users',userRoutes);
-app.use('/cars',carRoutes);
+app.use('/cars',carRoutes)
 
 app.use((error, req,res,next) => {
     const status = error.statusCode || 500;
