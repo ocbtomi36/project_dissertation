@@ -2,7 +2,7 @@ const db = require('../../database/db');
 
 module.exports = class Location {    
 
-    constructor(location_name, phone_number, addresses_idaddress){
+    constructor(location_name, phone_number,addresses_idaddress){
         this.location_name = location_name,
         this.phone_number = phone_number, 
         this.addresses_idaddress = addresses_idaddress
@@ -21,6 +21,15 @@ module.exports = class Location {
     static async getLocationByLocationName(location_name){
         try {
             const [row] = await db.query('SELECT * FROM location where location_name = ?',[location_name]);
+                return row.length > 0 ? row[0] : null;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+                throw error;
+            }
+        }
+    static async getPhoneNumByPhoneNum(phone_number){
+        try {
+            const [row] = await db.query('SELECT * FROM location where phone_number = ?',[phone_number]);
                 return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);
