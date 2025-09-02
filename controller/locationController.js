@@ -12,15 +12,22 @@ exports.addLocation = async (req,res,next) => {
         res.status(500).json({message: error.message})
     }
 }
+exports.getOneLocation = async (req,res,next) => {
+    try {
+        res.status(200).json({message: 'Querry success', data: req.location});
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
 exports.updateLocation = async (req,res,next) => {
     try {
         const idlocation = req.params.idlocation;
         const { location_name, phone_number,locality_name, postal_code, street_name, street_type, house_number } = req.body;
         const fkAddress = await AddressService.insertAddress(locality_name, postal_code, street_name, street_type, house_number);
-        const dbLocationNameLocationId = await User.GetsIdUserByIncommingPinNumber(pin_number);
-        const dbPhoneNumberLocationId = await User.GetsIdUserByIncommingEmail(email);
+        const dbLocationNameLocationId = await Location.getLocationByLocationName(location_name);
+        const dbPhoneNumberLocationId = await Location.getPhoneNumByPhoneNum(phone_number);
         const isLocationNameOk = dbLocationNameLocationId === null || dbLocationNameLocationId == idlocation;
-        const isPhoneNumberOk   = dbPhoneNumberLocationId === null || dbPhoneNumberLocationId == idlocation;
+        const isPhoneNumberOk = dbPhoneNumberLocationId === null || dbPhoneNumberLocationId == idlocation;
 
         if (isLocationNameOk && isPhoneNumberOk) {
             const updatingUser = new User(location_name,phone_number,fkAddress);

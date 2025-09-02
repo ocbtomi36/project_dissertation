@@ -20,6 +20,15 @@ class LocationDataValidateMiddleware {
         }
         next();
     }
+    static async checkLocationId(req,res,next) {
+        const { idlocation } = req.params;
+        const getLocation = await Location.getOneLocationDataById(idlocation);
+        if(getLocation === null) {
+            return res.status(409).json({ message: 'There is no Location with that id'})
+        }
+        req.location = getLocation;
+        next();
+    }
 
 
 }

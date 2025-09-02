@@ -8,8 +8,9 @@ const addressValidator = require('../validators/addressValidator');
 const locationDataValidateMiddleware = require('../middleware/location/locationDataValidateMiddleware');
 const locationController = require('../controller/locationController')
 
+router.get('/:idlocation',locationDataValidateMiddleware.checkLocationId,locationController.getOneLocation);
 router.post('/location',[locationValidator, addressValidator],incommingDataResult,locationDataValidateMiddleware.checkLocationName,locationDataValidateMiddleware.checkPhoneNumberNumber,locationController.addLocation);
-router.put('/location/:idlocation',[locationValidator, addressValidator],incommingDataResult,locationDataValidateMiddleware.checkLocationName,locationDataValidateMiddleware.checkPhoneNumberNumber,locationController.updateLocation);
+router.put('/:idlocation',[locationValidator, addressValidator],incommingDataResult,locationDataValidateMiddleware.checkLocationId,locationController.updateLocation);
 
 
 module.exports = router
