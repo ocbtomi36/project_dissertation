@@ -30,6 +30,5 @@ app.use((error, req,res,next) => {
     const data = error.data;
     res.status(status).json({message: message, data: data})
 });
-const port = process.env.PORT;
-
+const port =  3300//process.env.PORT;
 app.listen(port);

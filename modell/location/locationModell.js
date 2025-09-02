@@ -20,7 +20,7 @@ module.exports = class Location {
         }
     static async getLocationByLocationName(location_name){
         try {
-            const [row] = await db.query('SELECT * FROM location where location_name = ?',[location_name]);
+            const [row] = await db.query('SELECT * FROM locations where location_name = ?',[location_name]);
                 return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);
@@ -29,7 +29,7 @@ module.exports = class Location {
         }
     static async getPhoneNumByPhoneNum(phone_number){
         try {
-            const [row] = await db.query('SELECT * FROM location where phone_number = ?',[phone_number]);
+            const [row] = await db.query('SELECT * FROM locations where phone_number = ?',[phone_number]);
                 return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);
