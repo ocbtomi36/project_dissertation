@@ -26,7 +26,7 @@ class LocationDataValidateMiddleware {
         if(getLocation === null) {
             return res.status(409).json({ message: 'There is no Location with that id'})
         }
-        req.location = getLocation;
+        //req.location = getLocation;
         next();
     }
 

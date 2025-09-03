@@ -49,6 +49,15 @@ class UserDataValidateMiddleware {
             res.status(500).json({ message: 'An login error occured'})
         }
     }
+    static async checkUserId(req,res,next) {
+        const { iduser } = req.params;
+        const getUser = await User.getOneUserDataById(iduser);
+        if(getUser === null) {
+            return res.status(409).json({ message: 'There is no user with that id'})
+        }
+        req.user = getUser;
+        next();
+    }
 }
 
 module.exports = UserDataValidateMiddleware;

@@ -8,6 +8,16 @@ module.exports = class Location {
         this.addresses_idaddress = addresses_idaddress
     }
 
+    static async getAllLocation(){
+        try{
+            const [row] = await db.query('SELECT locations.idlocation, locations.location_name, locations.phone_number, addresses.postal_code, locality_names.locality_name, addresses.street_name, street_types.street_type ,addresses.house_number FROM finaldbrentcar.locations INNER JOIN addresses ON locations.addresses_idaddress = addresses.idaddress INNER JOIN locality_names ON addresses.locality_names_idlocality_name = locality_names.idlocality_name INNER JOIN street_types ON addresses.street_types_idstreet_type = street_types.idstreet_type ;');
+            return row.length > 0 ? row : null;
+        } catch(error){
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
+
     async saveLocation(){
         try {
             const [result] = await db.execute('INSERT INTO locations (location_name, phone_number, addresses_idaddress) VALUES (?, ?, ?)',

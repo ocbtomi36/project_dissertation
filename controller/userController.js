@@ -20,7 +20,6 @@ exports.getOneUser = async (req,res,next) => {
     const { iduser } = req.params;
     try {
         const result = await User.getOneUserDataById(iduser);
-        console.log(result);
     if(result !== null) {
         res.status(200).json({message: 'Querry success', data: result});
     } else {

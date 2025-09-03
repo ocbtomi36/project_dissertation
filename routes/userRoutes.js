@@ -10,8 +10,8 @@ const userController = require('../controller/userController')
 const router = express.Router();
 
 router.get('/users',userController.getAlluser);
-router.get('/:iduser',userController.getOneUser);
-router.put('/:iduser',[ userJsonUpdateValidate, addressValidator ], incommingDataResult,userDataValidateMiddleware.checkUserRole,userController.modifyUser);
+router.get('/:iduser',userDataValidateMiddleware.checkUserId,userController.getOneUser);
+router.put('/:iduser',[ userJsonUpdateValidate, addressValidator ], incommingDataResult,userDataValidateMiddleware.checkUserRole,userDataValidateMiddleware.checkUserId,userController.modifyUser);
 
 
 module.exports = router

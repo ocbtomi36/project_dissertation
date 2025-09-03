@@ -12,6 +12,20 @@ exports.addLocation = async (req,res,next) => {
         res.status(500).json({message: error.message})
     }
 }
+
+exports.getAllLocation = async (req,res,next) => {
+    try {
+        const locations = await Location.getAllLocation();
+    if(locations !== null) { 
+        res.status(200).json({message: 'Querry success', data: locations});
+    } else { 
+        res.status(200).json({message: 'There is no data in database'});
+     }
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 exports.getOneLocation = async (req,res,next) => {
     try {
         res.status(200).json({message: 'Querry success', data: req.location});
