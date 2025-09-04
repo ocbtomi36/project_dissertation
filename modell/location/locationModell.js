@@ -59,6 +59,7 @@ module.exports = class Location {
                 throw error;
             }
         }
+        
     static async getPhoneNumByPhoneNum(phone_number){
         try {
             const [row] = await db.query('SELECT * FROM locations where phone_number = ?',[phone_number]);

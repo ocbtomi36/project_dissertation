@@ -6,7 +6,7 @@ module.exports = class ProductionTime {
         this.productionTime = productionTime;
     }
 
-    async saveFuel(){
+    async saveProduction(){
             try {
                 const [result] = await db.execute('INSERT INTO production_types (production_type) VALUES ( ? )',
                     [this.productionTime]);
@@ -23,6 +23,6 @@ module.exports = class ProductionTime {
         } catch (error) {
             console.error('There is an error in database:', error);
                 throw error;
-            }
+        }
     }
 }

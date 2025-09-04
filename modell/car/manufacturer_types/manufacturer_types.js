@@ -1,4 +1,4 @@
-const db = require('../../database/db');
+const db = require('../../../database/db');
 
 module.exports = class ManufacturerTypes {
 
@@ -17,9 +17,9 @@ module.exports = class ManufacturerTypes {
                     throw error;
                 }
             }
-    static async getFuelByFuel(types_idType,manufacturer_Idmanufacturer){
+    static async getFuelByFuel(types_idType,manufacturer_idmanufacturer){
         try {
-            const [row] = await db.query('SELECT * FROM manufacturer_types where types_idtype = ? and manufacturers_idmanufacturer = ?',[types_idType,manufacturer_Idmanufacturer]);
+            const [row] = await db.query('SELECT * FROM manufacturer_types where types_idtype = ? and manufacturers_idmanufacturer = ?',[types_idType,manufacturer_idmanufacturer]);
                 return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);
