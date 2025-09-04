@@ -6,9 +6,9 @@ module.exports = class ProductionTime {
         this.productionTime = productionTime;
     }
 
-    async saveProduction(){
+    async saveProductionTime(){
             try {
-                const [result] = await db.execute('INSERT INTO production_types (production_type) VALUES ( ? )',
+                const [result] = await db.execute('INSERT INTO production_time (production_time) VALUES (?);',
                     [this.productionTime]);
                     return result.insertId;
                 } catch (error) {
@@ -18,7 +18,7 @@ module.exports = class ProductionTime {
             }
     static async getProductionTimeByProductionTime(productionTime){
         try {
-            const [row] = await db.query('SELECT * FROM production_times where production_time = ?',[productionTime]);
+            const [row] = await db.query('SELECT * FROM production_time where production_time = ?',[productionTime]);
                 return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);

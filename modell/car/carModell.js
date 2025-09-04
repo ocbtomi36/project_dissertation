@@ -18,7 +18,7 @@ module.exports = class Car {
 
     async saveCar(){
             try {
-                const [result] = await db.execute('INSERT INTO cars (vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time_idproduction_time, colors_idcolor, bodytypes_idbodytype, fuels_idfuel, manufacturer_types_idmanufacturer_types, locations_idlocation) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? );',
+                const [result] = await db.execute('INSERT INTO cars (vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time_idproduction_time, colors_idcolor, bodytypes_idbodytype, fuels_idfuel, manufacturer_type, locations_idlocation) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? );',
                     [this.vin_number, this.car_performance, this.engine_size, this.licence_plate, this.technical_validity, this.production_time_idproduction_time, this.colors_idcolor, this.bodytypes_idbodytype, this.fuels_idfuel, this.manufacturer_type, this.locations_idlocation]);
                     return result.insertId;
             } catch (error) {

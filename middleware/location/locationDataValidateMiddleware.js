@@ -12,6 +12,16 @@ class LocationDataValidateMiddleware {
         next();
     }
 
+    static async getLocationIdByLocationName(req,res,next) {
+        const { location_name } = req.body;
+        const getLocation = await Location.getLocationByLocationName(location_name);
+        if(getLocation === null) {
+            return res.status(409).json({ message: 'There is no Location with that name'})
+        }   
+        req.idLocation = getLocation.idlocation;
+        next();
+    }
+
     static async checkPhoneNumberNumber(req,res,next) {
         const { phone_number } = req.body;
         const getPhoneNumber = await Location.getPhoneNumByPhoneNum(phone_number);

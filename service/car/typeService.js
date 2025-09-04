@@ -3,13 +3,13 @@ const Type = require('../../modell/car/typeModell');
 module.exports = class TypeService {
 
     static async insertType(type){
-        const querryResultColor = await Type.getTypeByType(type);
-        if(querryResultColor !== null){
-            return querryResultColor.idtype;
+        const querryResultType = await Type.getTypeByType(type);
+        if(querryResultType !== null){
+            return querryResultType.idtype;
         } else {
-            const insertType = new Type(color);
+            const insertType = new Type(type);
             try{
-                return await insertColor.saveColor(color);
+                return await insertType.saveType(type);
             } catch {
                 res.status(500).json({ message: error})
             }

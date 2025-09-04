@@ -17,7 +17,7 @@ module.exports = class ManufacturerTypes {
                     throw error;
                 }
             }
-    static async getFuelByFuel(types_idType,manufacturer_idmanufacturer){
+    static async getManufacturersTypesByIds(types_idType,manufacturer_idmanufacturer){
         try {
             const [row] = await db.query('SELECT * FROM manufacturer_types where types_idtype = ? and manufacturers_idmanufacturer = ?',[types_idType,manufacturer_idmanufacturer]);
                 return row.length > 0 ? row[0] : null;

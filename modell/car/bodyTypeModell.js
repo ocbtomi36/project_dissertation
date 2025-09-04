@@ -8,6 +8,7 @@ module.exports = class BodyType {
 
     async saveBodyType(){
             try {
+                console.log(this.bodyType);
                 const [result] = await db.execute('INSERT INTO bodytypes (bodytype) VALUES ( ? )',
                     [this.bodyType]);
                     return result.insertId;
@@ -18,7 +19,7 @@ module.exports = class BodyType {
             }
     static async getBodyTypeByBodyType(bodyType){
         try {
-            const [row] = await db.query('SELECT * FROM bodytypes where bodytypes = ?',[bodyType]);
+            const [row] = await db.query('SELECT * FROM bodytypes where bodytype = ?',[bodyType]);
                 return row.length > 0 ? row[0] : null;
         } catch (error) {
             console.error('There is an error in database:', error);

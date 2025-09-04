@@ -9,7 +9,10 @@ module.exports = class ColorService {
         } else {
             const insertColor = new Color(color);
             try{
-                return await insertColor.saveColor(color);
+                
+                const id = await insertColor.saveColor(color);
+                console.log(id);
+                return id;
             } catch {
                 res.status(500).json({ message: error})
             }
