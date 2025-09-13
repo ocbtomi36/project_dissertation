@@ -11,24 +11,35 @@ exports.getAllCars = async (req,res,next) => {
 }
 
 exports.insertCar = async (req,res,next) => {
-    const { vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time, color, bodytype, fuel, manufacturer_type, type } = req.body;
+    const { vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time, color, bodytype, fuel, manufacturer, type } = req.body;
     try{
-        const insertCarPerformance = car_performance.toString();
-        const insertEngineSize = engine_size.toString();
-        console.log(insertEngineSize);
-        /*
+        // a dátum validálása később, most a lényeg, hogy be kerüljön az adatbázisba!
         const idLocation = req.idLocation;
         const production_time_idproduction_time = await ProductionTimeService.insertProductionTime(production_time);
         const colors_idcolor = await ColorService.insertColor(color);
         const bodytypes_idbodytype = await BodyTypeService.insertBodyType(bodytype);
         const fuels_idfuel = await FuelService.insertFuel(fuel);
-        const manufacturer_types_idmanufacturer_types = await ManufacturerTypeService.insertManufacturerType(manufacturer_type,type);
-
-        const insertCar = new Car(vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time_idproduction_time, colors_idcolor, bodytypes_idbodytype, fuels_idfuel, manufacturer_types_idmanufacturer_types, idLocation);
+        const manufacturer_types_idmanufacturer_types = await ManufacturerTypeService.insertManufacturerType(manufacturer,type);
+        console.log(manufacturer_types_idmanufacturer_types);
+        const insertCar = new Car(vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time_idproduction_time, colors_idcolor, bodytypes_idbodytype, fuels_idfuel,idLocation, manufacturer_types_idmanufacturer_types);
         return res.status(201).json({ message: "Car inserted successfully", carId: await insertCar.saveCar() });
-        */
         }   catch (error) {
 
-            return res.status(500).json({ message: error.message + " Ez ittt a hiba " });
+            return res.status(500).json({ message: error.message });
+        }
+}
+// update method is working properly 
+exports.updateCar = async (req,res,next) => {
+    const { vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time, color, bodytype, fuel, manufacturer, type } = req.body;
+    try{
+        // a dátum validálása később, most a lényeg, hogy be kerüljön az adatbázisba!
+        const carId = req.params.carId;
+        const updateCar = new Car(vin_number, car_performance, engine_size, licence_plate, technical_validity, 1, 1, 1, 1, 1, 3);
+        await updateCar.updateCar(carId);
+        return res.status(201).json({ message: "Car updated successfully"});
+        //return res.status(201).json({ message: "Car inserted successfully", carId: await insertCar.saveCar() });
+        }   catch (error) {
+
+            return res.status(500).json({ message: error.message });
         }
 }

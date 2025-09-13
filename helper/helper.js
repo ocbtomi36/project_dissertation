@@ -13,7 +13,7 @@ const incommingDataResult = (req, res, next) => {
 const validateIncommingUserRole = (req, res, next) => {
     // to do: later 
 }
-function numberValidator(fieldname) {
+function typeNumberValidator(fieldname) {
     return function (req,res,next) {
         const value = req.body[fieldname];
         if(typeof value !== 'number') {
@@ -27,5 +27,5 @@ function numberValidator(fieldname) {
 module.exports = {
     incommingDataResult,
     validateIncommingUserRole,
-    numberValidator
+    typeNumberValidator
 };

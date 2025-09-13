@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { incommingDataResult, numberValidator } = require('../helper/helper');
+const { incommingDataResult, typeNumberValidator } = require('../helper/helper');
 const carJsonInsertValidate = require('../validators/carValidator');
 
 const carController = require('../controller/carController');
@@ -9,6 +9,6 @@ const CarDataValidateMiddleware = require('../middleware/car/carDataValidateMidd
 
 const router = express.Router();
 
-router.post('/car',numberValidator('car_performance'),numberValidator('engine_size'),[carJsonInsertValidate],incommingDataResult,CarDataValidateMiddleware.checkVinNumber,LocationDataValidateMiddleware.getLocationIdByLocationName, carController.insertCar);
-
+router.post('/car',typeNumberValidator('car_performance'),typeNumberValidator('engine_size'),[carJsonInsertValidate],incommingDataResult,CarDataValidateMiddleware.checkVinNumber,LocationDataValidateMiddleware.getLocationIdByLocationName, carController.insertCar);
+router.put('/:carId',carController.updateCar);
 module.exports = router
