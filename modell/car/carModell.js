@@ -49,4 +49,13 @@ module.exports = class Car {
                     throw error;
             }
         }
+    static async getCarById(idcar){
+            try {
+                const [row] = await db.query('SELECT * FROM cars where idcar = ?',[idcar]);
+                    return row.length > 0 ? row[0] : null;
+            } catch (error) {
+                console.error('There is an error in database:', error);
+                    throw error;
+            }
+        }
 }
