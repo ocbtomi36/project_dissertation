@@ -8,7 +8,6 @@ module.exports = class BodyType {
 
     async saveBodyType(){
             try {
-                console.log(this.bodyType);
                 const [result] = await db.execute('INSERT INTO bodytypes (bodytype) VALUES ( ? )',
                     [this.bodyType]);
                     return result.insertId;

@@ -48,9 +48,6 @@ class CarDataValidateMiddleware {
             }
         }
         next();
-        /*
-        
-        */
     }
 
     static checkTechnicalValidity(req,res,next) {
