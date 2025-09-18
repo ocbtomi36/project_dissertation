@@ -9,7 +9,8 @@ module.exports = class TypeService {
         } else {
             const insertType = new Type(type);
             try{
-                return await insertType.saveType(type);
+                const id = await insertType.saveType(type);
+                return id;
             } catch {
                 res.status(500).json({ message: error})
             }

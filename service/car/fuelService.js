@@ -9,7 +9,8 @@ module.exports = class FuelService {
         } else {
             const insertFuel = new Fuel(fuel);
             try{
-                return await insertFuel.saveFuel(fuel);
+                const id = insertFuel.saveFuel(fuel);
+                return id;
             } catch {
                 res.status(500).json({ message: error})
             }

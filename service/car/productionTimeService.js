@@ -9,7 +9,8 @@ module.exports = class ProductionTimeService {
         } else {
             const insertProdTime = new ProductionTime(productionTime);
             try{
-                return await insertProdTime.saveProductionTime();
+                const id = insertProdTime.saveProductionTime();
+                return id;
             } catch {
                 res.status(500).json({ message: error})
             }

@@ -1,4 +1,5 @@
 const Car = require('../../modell/car/carModell');
+const { isValidDate } = require('../../helper/carHelper')
  
 class CarDataValidateMiddleware {
 
@@ -33,39 +34,55 @@ class CarDataValidateMiddleware {
 
     }
 
-    static checkLicencePlate(req,res,next) {
+    static async checkLicencePlate(req,res,next) {
         let { licence_plate } = req.body;
-        if (!licence_plate) return res.status(400).json({ error: "missing licence_plate field" });
-
-        licence_plate = licence_plate.toUpperCase().trim();
-
         const regex = /^([A-Z]{3,4}-?\d{3,4})$/;
-
-        if (!regex.test(licence_plate)) {
-            return res.status(400).json({ mesesage: "Not valid hungarian licence plate format" });
+        if(licence_plate !== undefined){
+            licence_plate = licence_plate.toUpperCase().trim();
+            if (!regex.test(licence_plate)) {
+                return res.status(400).json({ mesesage: "Not valid hungarian licence plate format" });
+            }
+            const getLicencePlate = await Car.getCarByLicencePlate(licence_plate);
+            if(getLicencePlate !==  null){
+                return res.status(409).json({ message: ' licence plate is already exist'})
+            }
         }
         next();
+        /*
+        
+        */
     }
 
     static checkTechnicalValidity(req,res,next) {
 
         const { technical_validity } = req.body;
-        const now = new Date();
-        let formattedToday = now.toISOString().substring(0,10);
-        if(formattedToday > technical_validity) {
-            return res.status(400).json({ message: "Invalid date/time, the date has already passed"})
-        } 
-        req.technical_validity = technical_validity;
-
+        if( technical_validity !== undefined) {
+            const date = isValidDate(technical_validity);
+            if (!date) {
+                return res.status(400).json({ mesesage: "Not valid date format" });
+            }
+            const inputDate = new Date(technical_validity);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            if(today > inputDate) {
+                return res.status(400).json({ message: "Invalid date/time, the date has already passed"})
+            }
+            req.technical_validity = technical_validity;
+        }
         next();
     }
 
     static checkProductionTime(req,res,next) {
 
         const { production_time } = req.body;
-        
-        if(production_time < '1950-01-01') {
-            return res.status(400).json({ message: "Production time must be younger than 1949"})
+        const date = isValidDate(production_time);
+        if (!date) {
+                return res.status(400).json({ mesesage: "Not valid date format" });
+        }
+        const inputDate = new Date(production_time);
+        const minDate = new Date("1950-01-01");
+        if(inputDate < minDate) {
+            return res.status(400).json({ message: "Production time must be older than 1949"})
         } 
         req.production_time = production_time;
 

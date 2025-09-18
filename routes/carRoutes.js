@@ -9,6 +9,12 @@ const CarDataValidateMiddleware = require('../middleware/car/carDataValidateMidd
 
 const router = express.Router();
 
-router.post('/car',typeNumberValidator('car_performance'),typeNumberValidator('engine_size'),[carJsonInsertValidate],incommingDataResult,CarDataValidateMiddleware.checkVinNumber,LocationDataValidateMiddleware.getLocationIdByLocationName, carController.insertCar);
-router.put('/:carId', typeNumberValidator('car_performance'), typeNumberValidator('engine_size'), CarDataValidateMiddleware.checkId, [carJsonInsertValidate], incommingDataResult, CarDataValidateMiddleware.checkLicencePlate, CarDataValidateMiddleware.checkTechnicalValidity,CarDataValidateMiddleware.checkProductionTime,CarDataValidateMiddleware.checkVinNumberOnUpdate, LocationDataValidateMiddleware.getLocationIdByLocationName, carController.updateCar);
+
+router.post('/car',typeNumberValidator('car_performance'),typeNumberValidator('engine_size'),[carJsonInsertValidate],incommingDataResult,CarDataValidateMiddleware.checkVinNumber,CarDataValidateMiddleware.checkLicencePlate,CarDataValidateMiddleware.checkTechnicalValidity, LocationDataValidateMiddleware.getLocationIdByLocationName, carController.insertCar);
+router.put('/:carId', typeNumberValidator('car_performance'), typeNumberValidator('engine_size'), CarDataValidateMiddleware.checkId, [carJsonInsertValidate], incommingDataResult, CarDataValidateMiddleware.checkLicencePlate, CarDataValidateMiddleware.checkTechnicalValidity,CarDataValidateMiddleware.checkProductionTime, CarDataValidateMiddleware.checkVinNumberOnUpdate, LocationDataValidateMiddleware.getLocationIdByLocationName, carController.updateCar);
+
 module.exports = router
+
+/**
+ *  , CarDataValidateMiddleware.checkProductionTime,
+ */

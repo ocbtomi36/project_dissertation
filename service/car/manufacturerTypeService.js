@@ -7,7 +7,9 @@ module.exports = class ManufacturerTypeService {
 
     static async insertManufacturerType(manufacturer, type){
         const fkManufacturer = await ManufacturerService.insertManufacturer(manufacturer);
+        console.log(fkManufacturer);
         const fkType = await TypeService.insertType(type);
+        console.log(fkType);
         const getManufacturerType = await ManufacturerType.getManufacturersTypesByIds(fkManufacturer,fkType);
         try{
             if(getManufacturerType !== null){

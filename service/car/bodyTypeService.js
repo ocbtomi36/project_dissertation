@@ -10,7 +10,8 @@ module.exports = class BodyTypeService {
         } else {
             const insertBodyType = new BodyType(bodyType);
             try{
-                return await insertBodyType.saveBodyType(bodyType);
+                const id = insertBodyType.saveBodyType(bodyType);
+                return id;
             } catch {
                 res.status(500).json({ message: error})
             }

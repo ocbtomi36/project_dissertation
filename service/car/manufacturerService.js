@@ -9,7 +9,8 @@ module.exports = class ManufacturerService {
         } else {
             const insertManufacturer = new Manufacturer(manufacturer);
             try{
-                return await insertManufacturer.saveManufacturer(manufacturer);
+                const id = await insertManufacturer.saveManufacturer(manufacturer);
+                return id;
             } catch {
                 res.status(500).json({ message: error})
             }

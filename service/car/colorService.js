@@ -11,7 +11,6 @@ module.exports = class ColorService {
             try{
                 
                 const id = await insertColor.saveColor(color);
-                console.log(id);
                 return id;
             } catch {
                 res.status(500).json({ message: error})
