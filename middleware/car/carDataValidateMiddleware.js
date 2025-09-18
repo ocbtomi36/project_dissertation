@@ -50,6 +50,23 @@ class CarDataValidateMiddleware {
         next();
     }
 
+    static async checkLicencePlateOnUpdate(req,res,next) {
+        let { licence_plate } = req.body;
+        const { carId } = req.params;
+        const regex = /^([A-Z]{3,4}-?\d{3,4})$/;
+        if(licence_plate !== undefined){
+            licence_plate = licence_plate.toUpperCase().trim();
+            if (!regex.test(licence_plate)) {
+                return res.status(400).json({ mesesage: "Not valid hungarian licence plate format" });
+            }
+            const getLicencePlate = await Car.getCarByLicencePlate(licence_plate);
+            if(getLicencePlate !==  null && getLicencePlate.idcar != carId){
+                return res.status(409).json({ message: ' licence plate is already exist under different id'})
+            }
+        }
+        next();
+    }
+
     static checkTechnicalValidity(req,res,next) {
 
         const { technical_validity } = req.body;

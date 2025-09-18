@@ -37,8 +37,8 @@ exports.updateCar = async (req,res,next) => {
         const fuels_idfuel = await FuelService.insertFuel(fuel);
         const manufacturer_types_idmanufacturer_types = await ManufacturerTypeService.insertManufacturerType(manufacturer,type);
         const updateCar = new Car(vin_number, car_performance, engine_size, licence_plate, technical_validity, production_time_idproduction_time, colors_idcolor, bodytypes_idbodytype, fuels_idfuel, locations_idlocation, manufacturer_types_idmanufacturer_types);
-        await updateCar.updateCar(carId);
-        return res.status(201).json({ message: "Car updated successfully"});
+        //await updateCar.updateCar(carId);
+        //return res.status(201).json({ message: "Car updated successfully"});
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
