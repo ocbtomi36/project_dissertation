@@ -31,4 +31,12 @@ module.exports = class Address {
                     throw error;
                 }
         }
+    async getAddressesById(addressId){
+            try{
+                const [row] = await db.query('SELECT * FROM addresses where idaddresses = ?', [addressId]);
+            } catch (error){
+                console.error('There is an error in database:', error);
+                    throw error;
+            }
+    }
 }

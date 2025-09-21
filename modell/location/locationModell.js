@@ -69,4 +69,13 @@ module.exports = class Location {
                 throw error;
             }
         }
+    static async getFkAdressesByFkAdderesses(fkAdresses){
+        try {
+            const [row] = await db.query('SELECT * FROM locations where addresses_idaddress = ?',[fkAdresses]);
+                return row.length > 0 ? row[0] : null;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+                throw error;
+            }
+        }
 }

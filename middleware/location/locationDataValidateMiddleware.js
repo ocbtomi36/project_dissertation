@@ -1,4 +1,5 @@
 const Location = require('../../modell/location/locationModell');
+//const Address = require('../../modell/adress/adressModell')
 
 class LocationDataValidateMiddleware {
 /** Location and Phone number are unique, */
@@ -36,11 +37,8 @@ class LocationDataValidateMiddleware {
         if(getLocation === null) {
             return res.status(409).json({ message: 'There is no Location with that id'})
         }
-        //req.location = getLocation;
         next();
     }
-
-
 }
 
 module.exports = LocationDataValidateMiddleware;
