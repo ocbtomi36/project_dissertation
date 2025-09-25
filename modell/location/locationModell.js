@@ -35,11 +35,9 @@ module.exports = class Location {
                 [this.location_name, this.phone_number, this.addresses_idaddress,idlocation]);
                 return result.insertId;
         } catch(error){
-            console.error('There is an error in database:', error);
                 throw error;
         }
     }  
-    
     static async getOneLocationDataById(idlocation){
         try {
             const [row] = await db.query('SELECT locations.idlocation, locations.location_name, locations.phone_number, addresses.postal_code, locality_names.locality_name, addresses.street_name, street_types.street_type ,addresses.house_number FROM finaldbrentcar.locations INNER JOIN addresses ON locations.addresses_idaddress = addresses.idaddress INNER JOIN locality_names ON addresses.locality_names_idlocality_name = locality_names.idlocality_name INNER JOIN street_types ON addresses.street_types_idstreet_type = street_types.idstreet_type where idlocation = ?;',[idlocation]);    
@@ -49,7 +47,6 @@ module.exports = class Location {
             throw error;
         }
     }
-
     static async getLocationByLocationName(location_name){
         try {
             const [row] = await db.query('SELECT * FROM locations where location_name = ?',[location_name]);
@@ -69,7 +66,7 @@ module.exports = class Location {
                 throw error;
             }
         }
-    static async getFkAdressesByFkAdderesses(fkAdresses){
+    static async getLocationByFkAdderesses(fkAdresses){
         try {
             const [row] = await db.query('SELECT * FROM locations where addresses_idaddress = ?',[fkAdresses]);
                 return row.length > 0 ? row[0] : null;
@@ -78,4 +75,13 @@ module.exports = class Location {
                 throw error;
             }
         }
+    static async getLocationById(incommingId){
+        try {
+            const [row] = await db.query('SELECT * FROM locations where idlocation = ?',[incommingId]);
+                return row.length > 0 ? row[0] : null;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }
