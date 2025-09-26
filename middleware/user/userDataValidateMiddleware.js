@@ -3,6 +3,10 @@ const bcrypt = require('bcryptjs');
 
 class UserDataValidateMiddleware {
 
+    static async isEmployed(req,res,next) {
+        
+    }
+
     static async checkEmail(req,res,next) {
         const { email } = req.body;
         const isEmailExists = await User.EmailExistsByIncommingData(email);

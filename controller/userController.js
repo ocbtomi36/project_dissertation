@@ -1,6 +1,8 @@
 
 const User = require('../modell/user/userModell');
 const AddressService = require('../service/address/addressService');
+const LocationModell = require('../modell/location/locationModell');
+const bcrypt = require('bcryptjs');
 
 
 exports.getAlluser = async (req,res,next) => {
@@ -29,19 +31,25 @@ exports.getOneUser = async (req,res,next) => {
         res.status(500).json({message: error.message})
     }
 }
+
 exports.modifyUser = async (req,res,next) => {
     try {
         const { given_name, family_name, pin_number, user_role, email, password, locality_name, postal_code, street_name, street_type, house_number } = req.body;
         const { iduser } = req.params;
 
         const fkAddress = await AddressService.insertAddress(locality_name, postal_code, street_name, street_type, house_number);
+        const getLocation = await LocationModell.getLocationByFkAdderesses(fkAddress);
+        const hashedPassword = await bcrypt.hash(password, 13);
+        if(getLocation !== null) {
+            return res.status(401).json({ message: 'This address cant be used'});
+        }
         const dbPinNumberUserId = await User.GetsIdUserByIncommingPinNumber(pin_number);
         const dbEmailUserId = await User.GetsIdUserByIncommingEmail(email);
         const isEmailOk = dbEmailUserId === null || dbEmailUserId == iduser;
         const isPinOk   = dbPinNumberUserId === null || dbPinNumberUserId == iduser;
 
         if (isEmailOk && isPinOk) {
-            const updatingUser = new User(given_name, family_name, pin_number, user_role, email, password,fkAddress);
+            const updatingUser = new User(given_name, family_name, pin_number, user_role, email, hashedPassword,fkAddress);
             await updatingUser.updateUserData(iduser);
             return res.status(201).json({ message: 'User update success' });
         }
@@ -49,6 +57,6 @@ exports.modifyUser = async (req,res,next) => {
         return res.status(401).json({ message: 'email or pin number must be unique' });
 
     } catch (error) {
-        res.status(500).json({message: error.message})
+        return res.status(500).json({message: error.message})
     }
 }

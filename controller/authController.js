@@ -1,5 +1,6 @@
 const User = require('../modell/user/userModell');
 const AddressService = require('../service/address/addressService');
+const LocationModell = require('../modell/location/locationModell')
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -11,14 +12,18 @@ exports.signup = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 13);
 
         const fkAddress = await AddressService.insertAddress(locality_name, postal_code, street_name, street_type, house_number);
-
+        const getLocation = await LocationModell.getLocationByFkAdderesses(fkAddress);
+        console.log(getLocation);
+        if(getLocation !== null) {
+            return res.status(401).json({ message: 'This address cant be used'});
+        }
         const insertingUser = new User(given_name, family_name, pin_number, user_role, email, hashedPassword, fkAddress);
         await insertingUser.save();
 
-        res.status(201).json({ message: 'User is Created' });
+        return res.status(201).json({ message: 'User is Created' });
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 }
 exports.login = async(req,res,next) => {
