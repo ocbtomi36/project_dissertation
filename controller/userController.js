@@ -60,3 +60,23 @@ exports.modifyUser = async (req,res,next) => {
         return res.status(500).json({message: error.message})
     }
 }
+exports.softDelete = async (req,res,next) => {
+    console.log("soft delete");
+    try {
+        const { iduser } = req.params;
+        await User.softDeleteUser(iduser);
+        res.status(200).json({ message: 'User deactivated successfully' });
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+exports.reActivate = async (req,res,next) => {
+    console.log("reactivate");
+    try {
+        const { iduser } = req.params;
+        await User.reActivateUser(iduser);
+        res.status(200).json({ message: 'User reactivated successfully' });
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+}

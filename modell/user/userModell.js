@@ -52,7 +52,24 @@ module.exports = class User {
             throw error;
         }
     }
-
+    static async softDeleteUser(iduser) {
+        try {
+            const [ result ] = await db.execute('UPDATE users SET is_employed = ? WHERE (iduser = ?);',['no',iduser]);
+            return result.insertId;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
+    static async reActivateUser(iduser) {
+        try {
+            const [ result ] = await db.execute('UPDATE users SET is_employed = ? WHERE (iduser = ?);',['yes',iduser]);
+            return result.insertId;
+        } catch (error) {
+            console.error('There is an error in database:', error);
+            throw error;
+        }
+    }
 
     /**
      * Check pin number
